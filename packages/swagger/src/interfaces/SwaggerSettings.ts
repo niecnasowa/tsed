@@ -1,4 +1,6 @@
-import {BodyParameter, ExternalDocs, Info, Path, QueryParameter, Response, Schema, Security, Tag} from "swagger-schema-official";
+import {OpenSpecVersions} from "./common/OpenSpecVersions";
+import {OpenSpec2} from "./openspec2/OpenSpec2";
+import {OpenSpec3} from "./openspec3/OpenSpec3";
 
 export interface SwaggerUIOptions {
   configUrl?: string;
@@ -12,25 +14,7 @@ export interface SwaggerUIOptions {
   [key: string]: any;
 }
 
-export interface SwaggerSpec {
-  swagger?: string;
-  info?: Info;
-  externalDocs?: ExternalDocs;
-  host?: string;
-  basePath?: string;
-  schemes?: string[];
-  consumes?: string[];
-  produces?: string[];
-  paths?: {[pathName: string]: Path};
-  definitions?: {[definitionsName: string]: Schema};
-  parameters?: {[parameterName: string]: BodyParameter | QueryParameter};
-  responses?: {[responseName: string]: Response};
-  security?: {[securityDefinitionName: string]: string[]}[];
-  securityDefinitions?: {[securityDefinitionName: string]: Security};
-  tags?: Tag[];
-}
-
-export interface SwaggerSettings {
+export interface SwaggerSettingsBase {
   /**
    * The url subpath to access to the documentation.
    */
@@ -38,7 +22,7 @@ export interface SwaggerSettings {
   /**
    * Specify the spec version you want to generate.
    */
-  specVersion?: "2.0" | "3.0.1";
+  specVersion?: OpenSpecVersions;
   /**
    * Swagger file name. By default swagger.json
    */
@@ -79,8 +63,22 @@ export interface SwaggerSettings {
    * Write the `swagger.json` spec documentation on the specified path.
    */
   outFile?: string;
+}
+
+export interface SwaggerOS2Settings extends SwaggerSettingsBase {
+  specVersion?: "2.0";
   /**
    *
    */
-  spec?: SwaggerSpec;
+  spec?: Partial<OpenSpec2>;
 }
+
+export interface SwaggerOS3Settings extends SwaggerSettingsBase {
+  specVersion?: "3.0.1" | "3.0.2" | "3.0.3" | "3.1.0";
+  /**
+   *
+   */
+  spec?: Partial<OpenSpec3>;
+}
+
+export type SwaggerSettings = SwaggerOS2Settings | SwaggerOS3Settings;

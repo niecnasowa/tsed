@@ -29,10 +29,10 @@ Then add the following configuration in your Server:
 ::: tip
 The path option for Swagger will be used to expose the documentation:
 
-- http://localhost:8000/v2/doc
-- http://localhost:8000/v3/doc
+- OAS2: http://localhost:8000/v2/doc
+- OAS3: http://localhost:8000/v3/doc
 
-Ts.ED will print the swagger url in the console.
+Ts.ED will print the swagger-ui url in the console.
 :::
 
 You can start your server and check if it works fine.
@@ -68,37 +68,33 @@ Then use `@Docs` decorators on your controllers to specify where the controllers
 
 <<< @/docs/tutorials/snippets/swagger/multi-spec-controllers.ts
 
-## Decorators
-
-These decorators already add a documentation on Swagger:
-
-<ApiList query="['Header', 'Status'].indexOf(symbolName) > -1 || (module === '@tsed/schema' && status.includes('decorator') && status.includes('model'))" />
-
-In addition, the Ts.ED Swagger plugin gives some decorators to write documentation:
-
-<ApiList query="module === '@tsed/swagger' && symbolType === 'decorator'" />
-
-## Examples
-#### Model documentation
+## Model documentation
 
 One of the feature of Ts.ED is the model definition to serialize or deserialize a
-JSON Object (see [converters section](/docs/converters.md)).
+JSON Object based on JsonSchema (See [model documentation](/docs/model.md)).
 
-This model can be used on a method controller along with [@BodyParams](/api/common/filters/decorators/BodyParams.md) or other decorators.
+A model can be used on a method controller along with [@BodyParams](/api/common/filters/decorators/BodyParams.md) or other decorators.
 
 <<< @/docs/tutorials/snippets/swagger/model.ts
 
-#### Endpoint documentation
+## Endpoint documentation
+
+This example shows you how to use the decorators to generate swagger documentation for an endpoint:
 
 <<< @/docs/tutorials/snippets/swagger/endpoint-documentation.ts
 
-::: tip
-For endpoints returning an array you have to use the @@ReturnsArray@@ decorator instead of @@Returns@@
-:::
+## Authentication and Authorization
 
-::: warning
-To update the `swagger.json` you have to reload the server before.
-:::
+OpenAPI uses the term security scheme for authentication and authorization schemes.
+
+Configuring security options with Ts.ED is pretty easy but it depend on which 
+
+## Extra parameters
+
+Sometimes you want to display extra `in` parameters like `headers` without consuming it in an endpoint.
+It's possible describe extra parameters by using the @@In@@ decorator over the method.
+
+<<< @/docs/tutorials/snippets/swagger/endpoint-extra-in-params.ts
 
 ## Import Javascript
 
@@ -115,6 +111,17 @@ document.addEventListener('swagger.init', (evt) => {
     console.log(SwaggerUIBuilder.ui); //Swagger-ui instance
 });
 ```
+
+## Decorators
+
+These decorators already add a documentation on Swagger:
+
+<ApiList query="['Header', 'Status'].indexOf(symbolName) > -1 || (status.includes('decorator') && status.includes('schema'))" />
+
+In addition, the Ts.ED Swagger plugin gives some decorators to manage documentation:
+
+<ApiList query="module === '@tsed/swagger' && symbolType === 'decorator'" />
+
 
 ## Author 
 

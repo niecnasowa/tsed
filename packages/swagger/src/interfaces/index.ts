@@ -9,3 +9,4 @@ declare global {
 }
 
 export * from "./SwaggerSettings";
+export * from "./common/OpenSpecVersions";
