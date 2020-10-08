@@ -1,0 +1,23 @@
+{
+  "name": "@tsed/openspec",
+  "version": "6.0.0-beta.12",
+  "description": "OpenSpec interfaces declarations",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "keywords": [
+    "TypeScript",
+    "interfaces",
+    "openspec",
+    "OAS3",
+    "OAS2",
+    "JsonSchema"
+  ],
+  "dependencies": {
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.compile.json"
+  },
+  "private": false,
+  "devDependencies": {
+  }
+}
